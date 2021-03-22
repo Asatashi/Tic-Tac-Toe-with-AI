@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class Main {     //TODO now i only have to make an win condition
 
     public static void rawTable(String[][] table) {         //it displays board
         System.out.println("---------");
@@ -55,12 +55,6 @@ public class Main {
             try {
                 firstInput = scanner.nextInt();
                 secondInput = scanner.nextInt();
-            } catch (InputMismatchException e) {        //TODO handle repeating catch in line 59
-                System.out.println("You should enter numbers!");
-            }
-//            TODO  loop if input is incorrect (or en error occurs)
-//                TODO also make win condition
-            try {
                 if (table[firstInput - 1][secondInput - 1].equals("  ")) {
                     if (count == 0 || count == 2 || count == 4 || count == 6 || count == 8) {
                         table[firstInput - 1][secondInput - 1] = os;
@@ -71,6 +65,10 @@ public class Main {
                 } else {
                     System.out.println("This cell is occupied! Choose another one!");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("You should enter numbers!");
+                scanner.next();
+                scanner.next();
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Coordinates should be from 1 to 3!");
             }
