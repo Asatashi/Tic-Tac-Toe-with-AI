@@ -49,29 +49,32 @@ public class Main {
         rawTable(table);
         String os = "O ";
         String xs = "X ";
+        boolean valid = false;
+        while (!valid) {
             System.out.print("Enter the coordinates: > ");
             try {
                 firstInput = scanner.nextInt();
                 secondInput = scanner.nextInt();
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {        //TODO handle repeating catch in line 59
                 System.out.println("You should enter numbers!");
             }
 //            TODO  loop if input is incorrect (or en error occurs)
 //                TODO also make win condition
             try {
                 if (table[firstInput - 1][secondInput - 1].equals("  ")) {
-                    //input from user X and O
-                        if (count == 0 || count == 2 || count == 4 || count == 6 || count == 8) {
-                            table[firstInput - 1][secondInput - 1] = os;
-                        } else {
-                            table[firstInput - 1][secondInput - 1] = xs;
-                        }
+                    if (count == 0 || count == 2 || count == 4 || count == 6 || count == 8) {
+                        table[firstInput - 1][secondInput - 1] = os;
+                    } else {
+                        table[firstInput - 1][secondInput - 1] = xs;
+                    }
+                    valid = true;
                 } else {
                     System.out.println("This cell is occupied! Choose another one!");
                 }
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Coordinates should be from 1 to 3!");
             }
+        }
             rawTable(table);
         }
 
