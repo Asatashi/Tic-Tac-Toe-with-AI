@@ -5,39 +5,46 @@ import java.util.Arrays;
 
 public class Main {
 
-    public static void displayTable(StringBuilder tableString) {       //it displays the game board
-        //now get rid of "[],"  in array before printing all things
-
-        System.out.println("---------");
-        System.out.print("|");
-        for (int i = 0; i < 2; i++) {
-            System.out.print(tableString.charAt(i));
+    public static void display(String[][] x) {
+        for (String[] strings : x) {
+            for (String string : strings) {
+                System.out.print(string + " ");
+            }
+            System.out.println();
         }
-        System.out.println("|");
-        System.out.print("|");
-        for (int i = 3; i < 5; i++) {
-            System.out.print(tableString.charAt(i));
-        }
-        System.out.println("|");
-        System.out.print("|");
-        for (int i = 6; i < 9; i++) {
-            System.out.print(tableString.charAt(i));
-        }
-        System.out.println("|");
-        System.out.println("---------");
     }
 
+    public static void displayTable(StringBuilder tableString, String[][] table) {       //it displays the game board
+            tableString.append(Arrays.toString(table));     //the game board displays correctly
+            System.out.println();                           //now i will take care of user input and errors
+            tableString.append(Arrays.deepToString(table));
+            System.out.println("---------");
+            System.out.print("| ");
+            for (int i = 0; i < 3; i++) {
+                System.out.print(table[0][i]);
+            }
+            System.out.println("|");
+            System.out.print("| ");
+            for (int i = 0; i < 3; i++) {
+                System.out.print(table[1][i]);
+            }
+            System.out.println("|");
+            System.out.print("| ");
+            for (int i = 0; i < 3; i++) {
+                System.out.print(table[2][i]);
+            }
+            System.out.println("|");
+            System.out.println("---------");
+        }
 
     public static void main(String[] args) {
-        char[][] table = new char[3][3];
-        char c = '_';
-        for (char[] chars : table) {
-            Arrays.fill(chars, c);
+        String[][] table = new String[3][3];
+        String s = "  ";
+        for (String[] strings : table) {
+            Arrays.fill(strings, s);
         }
-        System.out.println(Arrays.deepToString(table));
         StringBuilder tableString = new StringBuilder();
         tableString.append(Arrays.deepToString(table));
-        System.out.println("Enter the cells: " + tableString);
-        displayTable(tableString);
+        displayTable(tableString,table);
     }
 }
