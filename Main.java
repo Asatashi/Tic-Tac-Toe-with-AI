@@ -13,7 +13,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int firstInput = 0;
         int secondInput = 0;
-        StringBuilder tableString = new StringBuilder(9);
         String replacement = "_________";
         replacement = Arrays.deepToString(table);
         String replace;
@@ -24,27 +23,26 @@ public class Main {
             replace = replacement.replaceAll("\\[", "");
             replacement = replace;
             replace = replacement.replaceAll("]", "");
-            replacement = replace;      //TODO have to do something with weird output from the replacement variable
-            String downMark = "_________";
+            replacement = replace;
+            replace = replacement.replaceAll(" ", "");
+            replacement = replace;
             System.out.println("Enter the cells: > " + replacement);
-            tableString.append(Arrays.deepToString(table));
             String os = "O ";
             String xs = "X ";
             boolean isTrue = true;
             System.out.print("Enter the coordinates: > ");
-            while (isTrue) {
             try {
                 firstInput = scanner.nextInt();
                 secondInput = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("You should enter numbers!");
             }
-            //TODO  loop if input is incorrect (or en error occurs)
-                //TODO also make win condition 
+//            TODO  loop if input is incorrect (or en error occurs)
+//                TODO also make win condition
         try {
             if (table[firstInput - 1][secondInput - 1].equals("  ")) {
-                for (int i = 0; i < table.length; i++) {        //input from user X and O
-                    if (i == 0) {
+                for (int i = 0; i < 9; i++) {        //input from user X and O
+                    if (i == 0 || i == 2 || i == 4 || i == 6 || i == 8) {
                         table[firstInput - 1][secondInput - 1] = os;
                     } else {
                         table[firstInput - 1][secondInput - 1] = xs;
@@ -52,15 +50,10 @@ public class Main {
                 }
             } else {
                 System.out.println("This cell is occupied! Choose another one!");
-                isTrue = false;
             }
         } catch (IndexOutOfBoundsException e) {
                 System.out.println("Coordinates should be from 1 to 3!");
-            isTrue = false;
         }
-            }
-            tableString.append(Arrays.toString(table));
-            tableString.append(Arrays.deepToString(table));
             System.out.println("---------");
             System.out.print("| ");
             for (int i = 0; i < 3; i++) {
@@ -86,7 +79,7 @@ public class Main {
         for (String[] strings : table) {
             Arrays.fill(strings, s);
         }
-        for (int i = 0; i < table.length; i++) {
+        for (int i = 0; i < 9; i++) {
             displayTable(table);
         }
     }
