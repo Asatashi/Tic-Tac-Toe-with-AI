@@ -28,19 +28,19 @@ public class Main {
     }
 
 
-    public static void displayTable(String[][] table, int count) {       //it displays the game board with user input
+    public static void displayTable(String[][] table) {       //it displays the game board with user input
         Scanner scanner = new Scanner(System.in);
         int firstInput;
         int secondInput;
-        boolean isDraw = false;
+        int count = 9; // there goes display of X or O i now
         for (String[] strings : table) {
             for (String string : strings) {
                 if (!string.equals("  ")) {
-                    isDraw = true;
+                    count--;
                 }
             }
         }
-//        String replacement;           //uncomment(and comment line ) this when you want a full game without start initialization
+//        String replacement;           //uncomment this when you want a full game without start initialization of X's and O's
 //        replacement = Arrays.deepToString(table);
 //        String replace;
 //        replace = replacement.replaceAll(" {2}", "_");
@@ -58,7 +58,7 @@ public class Main {
         String os = "O ";
         String xs = "X ";
         boolean valid = false;
-        while (!valid) {                //TODO scan how many empty spaces are and on that information make to display O or X
+        while (!valid) {                //TODO scan how many empty spaces are and on that information make to display O or X, i think it's working but leave TODO just in case to check it tomorrow
             System.out.print("Enter the coordinates: > ");
             try {
                 firstInput = scanner.nextInt();
@@ -75,13 +75,13 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("You should enter numbers!");
-                scanner.next();
-                scanner.next();
+                scanner.reset();            //TODO it's still repeating itself, i need to fix that
+                scanner.reset();            //TODO also if game is in a state when no one can win it should print "Game not finished", i have to implement logic to this
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Coordinates should be from 1 to 3!");
             }
         }
-        if (    table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this
+        if (    table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this, i will try to fix it when i will get an idea how to do this correctly
                 || table[1][0].equals(xs) && table[1][1].equals(xs) && table[1][2].equals(xs)
                 || table[2][0].equals(xs) && table[2][1].equals(xs) && table[2][2].equals(xs)
                 || table[0][0].equals(xs) && table[1][0].equals(xs) && table[2][0].equals(xs)
@@ -103,7 +103,7 @@ public class Main {
             System.out.println("O wins");
             rawTable(table);
             System.exit(0);
-        } else if (isDraw) {
+        } else if (count == 0) {
             System.out.println("Draw");
             rawTable(table);
             System.exit(0);
@@ -115,7 +115,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String[][] table = new String[3][3];
         String s = "  ";
-        int count = 0;
         String cells;
         for (String[] strings : table) {
             Arrays.fill(strings, s);
@@ -136,8 +135,7 @@ public class Main {
         }
         rawTable(table);
         for (int i = 0; i < 9; i++) {
-            displayTable(table,count);
-            count++;
+            displayTable(table);
         }
     }
 }
