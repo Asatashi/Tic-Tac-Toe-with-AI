@@ -2,21 +2,64 @@ package tictactoe;
 
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void display(String[][] x) {
-        for (String[] strings : x) {
-            for (String string : strings) {
-                System.out.print(string + " ");
-            }
-            System.out.println();
-        }
-    }
 
-    public static void displayTable(StringBuilder tableString, String[][] table) {       //it displays the game board
-            tableString.append(Arrays.toString(table));     //the game board displays correctly
-            System.out.println();                           //now i will take care of user input and errors
+
+    public static void displayTable(String[][] table) {       //it displays the game board with user input
+        Scanner scanner = new Scanner(System.in);
+        int firstInput = 0;
+        int secondInput = 0;
+        StringBuilder tableString = new StringBuilder(9);
+        String replacement = "_________";
+        replacement = Arrays.deepToString(table);
+        String replace;
+            replace = replacement.replaceAll("  ", "_");
+            replacement = replace;
+            replace = replacement.replaceAll(",", "");
+            replacement = replace;
+            replace = replacement.replaceAll("\\[", "");
+            replacement = replace;
+            replace = replacement.replaceAll("]", "");
+            replacement = replace;      //TODO have to do something with weird output from the replacement variable
+            String downMark = "_________";
+            System.out.println("Enter the cells: > " + replacement);
+            tableString.append(Arrays.deepToString(table));
+            String os = "O ";
+            String xs = "X ";
+            boolean isTrue = true;
+            System.out.print("Enter the coordinates: > ");
+            while (isTrue) {
+            try {
+                firstInput = scanner.nextInt();
+                secondInput = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("You should enter numbers!");
+            }
+            //TODO  loop if input is incorrect (or en error occurs)
+                //TODO also make win condition 
+        try {
+            if (table[firstInput - 1][secondInput - 1].equals("  ")) {
+                for (int i = 0; i < table.length; i++) {        //input from user X and O
+                    if (i == 0) {
+                        table[firstInput - 1][secondInput - 1] = os;
+                    } else {
+                        table[firstInput - 1][secondInput - 1] = xs;
+                    }
+                }
+            } else {
+                System.out.println("This cell is occupied! Choose another one!");
+                isTrue = false;
+            }
+        } catch (IndexOutOfBoundsException e) {
+                System.out.println("Coordinates should be from 1 to 3!");
+            isTrue = false;
+        }
+            }
+            tableString.append(Arrays.toString(table));
             tableString.append(Arrays.deepToString(table));
             System.out.println("---------");
             System.out.print("| ");
@@ -43,8 +86,8 @@ public class Main {
         for (String[] strings : table) {
             Arrays.fill(strings, s);
         }
-        StringBuilder tableString = new StringBuilder();
-        tableString.append(Arrays.deepToString(table));
-        displayTable(tableString,table);
+        for (int i = 0; i < table.length; i++) {
+            displayTable(table);
+        }
     }
 }
