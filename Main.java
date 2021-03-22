@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {     //TODO now i only have to make an win condition
+public class Main {     //TODO win condition done but i have to do initial start chosen by user at the start of the game
 
     public static void rawTable(String[][] table) {         //it displays board
         System.out.println("---------");
@@ -30,12 +30,14 @@ public class Main {     //TODO now i only have to make an win condition
 
     public static void displayTable(String[][] table, int count) {       //it displays the game board with user input
         Scanner scanner = new Scanner(System.in);
-        int firstInput = 0;
-        int secondInput = 0;
+        int counter = 0;
+        counter++;
+        int firstInput;
+        int secondInput;
         String replacement;
         replacement = Arrays.deepToString(table);
         String replace;
-        replace = replacement.replaceAll("  ", "_");
+        replace = replacement.replaceAll(" {2}", "_");
         replacement = replace;
         replace = replacement.replaceAll(",", "");
         replacement = replace;
@@ -72,6 +74,33 @@ public class Main {     //TODO now i only have to make an win condition
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Coordinates should be from 1 to 3!");
             }
+        }
+        if (    table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this
+                || table[1][0].equals(xs) && table[1][1].equals(xs) && table[1][2].equals(xs)
+                || table[2][0].equals(xs) && table[2][1].equals(xs) && table[2][2].equals(xs)
+                || table[0][0].equals(xs) && table[1][0].equals(xs) && table[2][0].equals(xs)
+                || table[0][1].equals(xs) && table[1][1].equals(xs) && table[2][1].equals(xs)
+                || table[0][2].equals(xs) && table[1][2].equals(xs) && table[2][2].equals(xs)
+                || table[0][0].equals(xs) && table[1][1].equals(xs) && table[2][2].equals(xs)
+                || table[2][0].equals(xs) && table[1][1].equals(xs) && table[0][2].equals(xs)) {
+            System.out.println("X wins");
+            rawTable(table);
+            System.exit(0);
+        } else if (table[0][0].equals(os) && table[0][1].equals(os) && table[0][2].equals(os)
+                || table[1][0].equals(os) && table[1][1].equals(os) && table[1][2].equals(os)
+                || table[2][0].equals(os) && table[2][1].equals(os) && table[2][2].equals(os)
+                || table[0][0].equals(os) && table[1][0].equals(os) && table[2][0].equals(os)
+                || table[0][1].equals(os) && table[1][1].equals(os) && table[2][1].equals(os)
+                || table[0][2].equals(os) && table[1][2].equals(os) && table[2][2].equals(os)
+                || table[0][0].equals(os) && table[1][1].equals(os) && table[2][2].equals(os)
+                || table[2][0].equals(os) && table[1][1].equals(os) && table[0][2].equals(os)) {
+            System.out.println("O wins");
+            rawTable(table);
+            System.exit(0);
+        } else if (counter == 9) {
+            System.out.println("Draw");
+            rawTable(table);
+            System.exit(0);
         }
             rawTable(table);
         }
