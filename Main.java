@@ -150,41 +150,47 @@ public class Main {
         for (String[] strings : table) {
             Arrays.fill(strings, s);
         }
-        String stringStart;
+        String one = "start user user";
+        String two = "start easy easy";
+        String three = "start easy user";
+        String four = "start user easy";
         String commandOne;
         String commandTwo;
-        String correctStart = "start";
-        String userCorrect = "user";
-        String aiCorrect = "easy";
         boolean valid = false;
         while (!valid) {
             System.out.print("Input command: > ");
-            stringStart = scanner.next();               //TODO make methods depending on the start input with determines if a user(s) play or bot(s)
-            commandOne = scanner.next();                //TODO make only one input
-            commandTwo = scanner.next();
-
-            if (stringStart.equals(correctStart)
-                    && (commandOne.equals(userCorrect) || commandOne.equals(aiCorrect))
-                    && (commandTwo.equals(userCorrect) || commandTwo.equals(aiCorrect))) {
-                if (commandOne.equals(userCorrect) && commandTwo.equals(aiCorrect)) {
+            String allForOne = scanner.next();
+            if (allForOne.equals(one)               //TODO upgrade this input because it is not printing things that i want
+                    || allForOne.equals(two)
+                    || allForOne.equals(three)
+                    || allForOne.equals(four)) {
+                if (allForOne.equals(four) || allForOne.equals(three)) {
                     rawTable(table);
                     for (int i = 0; i < 9; i++) {
+                        commandOne = "user";
+                        commandTwo = "easy";
                         displayTable(table,commandTwo,commandOne);
                         valid = true;
                     }
-                } else if (commandOne.equals(aiCorrect) && commandTwo.equals(aiCorrect)) {
+                } else if (allForOne.equals(two) ) {
                     rawTable(table);
                     for (int i = 0; i < 9; i++) {
+                        commandOne = "easy";
+                        commandTwo = "easy";
                         displayTable(table,commandTwo,commandOne);
                         valid = true;
                     }
                 } else {
                     rawTable(table);
                     for (int i = 0; i < 9; i++) {
+                        commandOne = "user";
+                        commandTwo = "user";
                         displayTable(table,commandTwo,commandOne);
                         valid = true;
                     }
                 }
+            } else if (allForOne.equals("exit")) {
+                System.exit(0);
             } else {
                 System.out.println("Bad parameters!");
             }
