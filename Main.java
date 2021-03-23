@@ -27,6 +27,36 @@ public class Main {
         System.out.println("---------");
     }
 
+    public static void gameRules(String[][] table, String xs, String os, int count) {
+         if (table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this, i will try to fix it when i will get an idea how to do this correctly
+                || table[1][0].equals(xs) && table[1][1].equals(xs) && table[1][2].equals(xs)
+                || table[2][0].equals(xs) && table[2][1].equals(xs) && table[2][2].equals(xs)
+                || table[0][0].equals(xs) && table[1][0].equals(xs) && table[2][0].equals(xs)
+                || table[0][1].equals(xs) && table[1][1].equals(xs) && table[2][1].equals(xs)
+                || table[0][2].equals(xs) && table[1][2].equals(xs) && table[2][2].equals(xs)
+                || table[0][0].equals(xs) && table[1][1].equals(xs) && table[2][2].equals(xs)
+                || table[2][0].equals(xs) && table[1][1].equals(xs) && table[0][2].equals(xs)) {
+            System.out.println("O wins");
+            rawTable(table);
+            System.exit(0);
+        } else if (table[0][0].equals(os) && table[0][1].equals(os) && table[0][2].equals(os)
+                || table[1][0].equals(os) && table[1][1].equals(os) && table[1][2].equals(os)
+                || table[2][0].equals(os) && table[2][1].equals(os) && table[2][2].equals(os)
+                || table[0][0].equals(os) && table[1][0].equals(os) && table[2][0].equals(os)
+                || table[0][1].equals(os) && table[1][1].equals(os) && table[2][1].equals(os)
+                || table[0][2].equals(os) && table[1][2].equals(os) && table[2][2].equals(os)
+                || table[0][0].equals(os) && table[1][1].equals(os) && table[2][2].equals(os)
+                || table[2][0].equals(os) && table[1][1].equals(os) && table[0][2].equals(os)) {
+            System.out.println("X wins");
+            rawTable(table);
+            System.exit(0);
+        } else if (count == 1) {
+            System.out.println("Draw");
+            rawTable(table);
+            System.exit(0);
+        }
+    }
+
 
     public static void displayTable(String[][] table) {       //it displays the game board with user input
         Scanner scanner = new Scanner(System.in);
@@ -51,6 +81,7 @@ public class Main {
                     secondInput = scanner.nextInt();
                     if (table[firstInput - 1][secondInput - 1].equals("  ")) {
                         table[firstInput - 1][secondInput - 1] = xs;
+                        rawTable(table);
                         valid = true;
                     } else {
                         System.out.println("This cell is occupied! Choose another one!");
@@ -62,44 +93,20 @@ public class Main {
                     System.out.println("Coordinates should be from 1 to 3!");
                 }
             }
-            if (table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this, i will try to fix it when i will get an idea how to do this correctly
-                    || table[1][0].equals(xs) && table[1][1].equals(xs) && table[1][2].equals(xs)
-                    || table[2][0].equals(xs) && table[2][1].equals(xs) && table[2][2].equals(xs)
-                    || table[0][0].equals(xs) && table[1][0].equals(xs) && table[2][0].equals(xs)
-                    || table[0][1].equals(xs) && table[1][1].equals(xs) && table[2][1].equals(xs)
-                    || table[0][2].equals(xs) && table[1][2].equals(xs) && table[2][2].equals(xs)
-                    || table[0][0].equals(xs) && table[1][1].equals(xs) && table[2][2].equals(xs)
-                    || table[2][0].equals(xs) && table[1][1].equals(xs) && table[0][2].equals(xs)) {
-                System.out.println("X wins");
-                rawTable(table);
-                System.exit(0);
-            } else if (table[0][0].equals(os) && table[0][1].equals(os) && table[0][2].equals(os)
-                    || table[1][0].equals(os) && table[1][1].equals(os) && table[1][2].equals(os)
-                    || table[2][0].equals(os) && table[2][1].equals(os) && table[2][2].equals(os)
-                    || table[0][0].equals(os) && table[1][0].equals(os) && table[2][0].equals(os)
-                    || table[0][1].equals(os) && table[1][1].equals(os) && table[2][1].equals(os)
-                    || table[0][2].equals(os) && table[1][2].equals(os) && table[2][2].equals(os)
-                    || table[0][0].equals(os) && table[1][1].equals(os) && table[2][2].equals(os)
-                    || table[2][0].equals(os) && table[1][1].equals(os) && table[0][2].equals(os)) {
-                System.out.println("O wins");
-                rawTable(table);
-                System.exit(0);
-            } else if (count == 1) {
-                System.out.println("Draw");
-                rawTable(table);
-                System.exit(0);
-            }
+            gameRules(table,os,xs,count);
         } else {
-            int randomNumOne = (int) (Math.random() * 3 + 1);
-            int randomNumTwo = (int) (Math.random() * 3 + 1);
+            System.out.println("Making move level \"easy\"");
             boolean valid = false;
             while (!valid) {
-                if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
-                    table[randomNumOne - 1][randomNumTwo - 1] = os;
-                    valid = true;
-                }
-                rawTable(table);
+                int randomNumOne = (int) (Math.random() * 3 + 1);
+                int randomNumTwo = (int) (Math.random() * 3 + 1);
+                    if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
+                        table[randomNumOne - 1][randomNumTwo - 1] = os;
+                        rawTable(table);
+                        valid = true;
+                    }
             }
+            gameRules(table,os,xs,count);
         }
     }
     public static void main(String[] args) {
