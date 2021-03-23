@@ -28,7 +28,7 @@ public class Main {
     }
 
     public static void gameRules(String[][] table, String xs, String os, int count) {
-         if (table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this, i will try to fix it when i will get an idea how to do this correctly
+        if (table[0][0].equals(xs) && table[0][1].equals(xs) && table[0][2].equals(xs)          //that's a lot of repeated code, but my brain isn't working well, and i have no idea how to approach this, i will try to fix it when i will get an idea how to do this correctly
                 || table[1][0].equals(xs) && table[1][1].equals(xs) && table[1][2].equals(xs)
                 || table[2][0].equals(xs) && table[2][1].equals(xs) && table[2][2].equals(xs)
                 || table[0][0].equals(xs) && table[1][0].equals(xs) && table[2][0].equals(xs)
@@ -58,7 +58,7 @@ public class Main {
     }
 
 
-    public static void displayTable(String[][] table,String commandTwo, String commandOne) {       //it displays the game board with user input
+    public static void displayTable(String[][] table, String commandTwo, String commandOne) {       //it displays the game board with user input
         Scanner scanner = new Scanner(System.in);
         int firstInput;
         int secondInput;
@@ -106,19 +106,19 @@ public class Main {
                     }
                 }
             }
-            } else if(commandTwo.equals("easy")) {
-                System.out.println("Making move level \"easy\"");
-                boolean valid = false;
-                while (!valid) {
-                    int randomNumOne = (int) (Math.random() * 3 + 1);
-                    int randomNumTwo = (int) (Math.random() * 3 + 1);
-                    if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
-                        table[randomNumOne - 1][randomNumTwo - 1] = os;
-                        rawTable(table);
-                        valid = true;
-                    }
+        } else if (commandTwo.equals("easy")) {
+            System.out.println("Making move level \"easy\"");
+            boolean valid = false;
+            while (!valid) {
+                int randomNumOne = (int) (Math.random() * 3 + 1);
+                int randomNumTwo = (int) (Math.random() * 3 + 1);
+                if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
+                    table[randomNumOne - 1][randomNumTwo - 1] = os;
+                    rawTable(table);
+                    valid = true;
                 }
-            } else {
+            }
+        } else {
             boolean valid = false;
             while (!valid) {
                 System.out.print("Enter the coordinates: > ");
@@ -140,8 +140,8 @@ public class Main {
                 }
             }
         }
-            gameRules(table, os, xs, count);
-        }
+        gameRules(table, os, xs, count);
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -150,46 +150,35 @@ public class Main {
         for (String[] strings : table) {
             Arrays.fill(strings, s);
         }
-        String one = "start user user";
-        String two = "start easy easy";
-        String three = "start easy user";
-        String four = "start user easy";
         String commandOne;
         String commandTwo;
+        String userCorrect = "user";
+        String aiCorrect = "easy";
         boolean valid = false;
         while (!valid) {
             System.out.print("Input command: > ");
-            String allForOne = scanner.next();
-            if (allForOne.equals(one)               //TODO upgrade this input because it is not printing things that i want
-                    || allForOne.equals(two)
-                    || allForOne.equals(three)
-                    || allForOne.equals(four)) {
-                if (allForOne.equals(four) || allForOne.equals(three)) {
-                    rawTable(table);
-                    for (int i = 0; i < 9; i++) {
-                        commandOne = "user";
-                        commandTwo = "easy";
-                        displayTable(table,commandTwo,commandOne);
-                        valid = true;
-                    }
-                } else if (allForOne.equals(two) ) {
-                    rawTable(table);
-                    for (int i = 0; i < 9; i++) {
-                        commandOne = "easy";
-                        commandTwo = "easy";
-                        displayTable(table,commandTwo,commandOne);
-                        valid = true;
-                    }
-                } else {
-                    rawTable(table);
-                    for (int i = 0; i < 9; i++) {
-                        commandOne = "user";
-                        commandTwo = "user";
-                        displayTable(table,commandTwo,commandOne);
-                        valid = true;
-                    }
+            String stringStart = scanner.next();
+            commandOne = scanner.next();                //TODO make only one input
+            commandTwo = scanner.next();
+            if (commandOne.equals(userCorrect) && commandTwo.equals(aiCorrect)) {
+                rawTable(table);
+                for (int i = 0; i < 9; i++) {
+                    displayTable(table, commandTwo, commandOne);
+                    valid = true;
                 }
-            } else if (allForOne.equals("exit")) {
+            } else if (commandOne.equals(aiCorrect) && commandTwo.equals(aiCorrect)) {
+                rawTable(table);
+                for (int i = 0; i < 9; i++) {
+                    displayTable(table, commandTwo, commandOne);
+                    valid = true;
+                }
+            } else if (commandOne.equals(userCorrect) && commandTwo.equals(userCorrect)) {
+                rawTable(table);
+                for (int i = 0; i < 9; i++) {
+                    displayTable(table, commandTwo, commandOne);
+                    valid = true;
+                }
+            }   else if (stringStart.equals("exit")) {
                 System.exit(0);
             } else {
                 System.out.println("Bad parameters!");
