@@ -72,52 +72,73 @@ public class Main {
         }
         String os = "O ";
         String xs = "X ";
-        if (count == 1 || count == 3 || count == 5 || count == 7 || count == 9) {
-            boolean valid = false;
-            while (!valid) {
-                System.out.print("Enter the coordinates: > ");
-                try {
-                    firstInput = scanner.nextInt();
-                    secondInput = scanner.nextInt();
-                    if (table[firstInput - 1][secondInput - 1].equals("  ")) {
-                        table[firstInput - 1][secondInput - 1] = xs;
-                        rawTable(table);
-                        valid = true;
-                    } else {
-                        System.out.println("This cell is occupied! Choose another one!");
+            if ((count == 1 || count == 3 || count == 5 || count == 7 || count == 9)) {
+                boolean valid = false;
+                while (!valid) {
+                    System.out.print("Enter the coordinates: > ");
+                    try {
+                        firstInput = scanner.nextInt();
+                        secondInput = scanner.nextInt();
+                        if (table[firstInput - 1][secondInput - 1].equals("  ")) {
+                            table[firstInput - 1][secondInput - 1] = xs;
+                            rawTable(table);
+                            valid = true;
+                        } else {
+                            System.out.println("This cell is occupied! Choose another one!");
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("You should enter numbers!");
+                        return;
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Coordinates should be from 1 to 3!");
                     }
-                } catch (InputMismatchException e) {
-                    System.out.println("You should enter numbers!");
-                    return;
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Coordinates should be from 1 to 3!");
                 }
-            }
-            gameRules(table,os,xs,count);
-        } else {
-            System.out.println("Making move level \"easy\"");
-            boolean valid = false;
-            while (!valid) {
-                int randomNumOne = (int) (Math.random() * 3 + 1);
-                int randomNumTwo = (int) (Math.random() * 3 + 1);
+            } else {
+                System.out.println("Making move level \"easy\"");
+                boolean valid = false;
+                while (!valid) {
+                    int randomNumOne = (int) (Math.random() * 3 + 1);
+                    int randomNumTwo = (int) (Math.random() * 3 + 1);
                     if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
                         table[randomNumOne - 1][randomNumTwo - 1] = os;
                         rawTable(table);
                         valid = true;
                     }
+                }
             }
-            gameRules(table,os,xs,count);
+            gameRules(table, os, xs, count);
         }
-    }
+
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         String[][] table = new String[3][3];
         String s = "  ";
         for (String[] strings : table) {
             Arrays.fill(strings, s);
         }
-        rawTable(table);
-        for (int i = 0; i < 9; i++) {
-            displayTable(table);
+        String stringStart = "";
+        String commandOne = "";
+        String commandTwo = "";
+        String correctStart = "start";
+        String userCorrect = "user";
+        String aiCorrect = "easy";
+        boolean valid = false;
+        while (!valid) {
+            System.out.println("Input command: > ");
+            stringStart = scanner.next();               //TODO make methods depending on the start input with determines if a user(s) play or bot(s)
+            commandOne = scanner.next();
+            commandTwo = scanner.next();
+            if (stringStart.equals(correctStart)
+                    && (commandOne.equals(userCorrect) || commandOne.equals(aiCorrect))
+                    && (commandTwo.equals(userCorrect) || commandTwo.equals(aiCorrect))) {
+                rawTable(table);
+                for (int i = 0; i < 9; i++) {
+                    displayTable(table);
+                    valid = true;
+                }
+            } else {
+                System.out.println("Bad parameters!");
+            }
         }
     }
 }
