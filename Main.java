@@ -1,6 +1,7 @@
 package tictactoe;
 
 
+
 import java.util.Arrays;
 import java.util.InputMismatchException;            //now you can chose at the start if u want to play vs bot or user or maybe watch bots fight each other
 import java.util.Scanner;
@@ -156,33 +157,40 @@ public class Main {
         String aiCorrect = "easy";
         boolean valid = false;
         while (!valid) {
-            System.out.print("Input command: > ");
-            String stringStart = scanner.next();
-            commandOne = scanner.next();                //TODO make only one input
-            commandTwo = scanner.next();
-            if (commandOne.equals(userCorrect) && commandTwo.equals(aiCorrect)) {
-                rawTable(table);
-                for (int i = 0; i < 9; i++) {
-                    displayTable(table, commandTwo, commandOne);
-                    valid = true;
+        try {
+//            System.out.println("Please enter: start and user or easy two times(user is you playing an easy is bot)");
+                System.out.print("Input command: > ");
+                String[] arrayInput = scanner.nextLine().split(" ");
+                for (int j = 0; j < 3; j++) {
+                    if (arrayInput[j].equals("start") || arrayInput[j].equals("easy") || arrayInput[j].equals("user")) {
+                        commandOne = arrayInput[1];
+                        commandTwo = arrayInput[2];
+                        if (commandOne.equals(userCorrect) && commandTwo.equals(aiCorrect) || commandOne.equals(aiCorrect) && commandTwo.equals(userCorrect)) {
+                            rawTable(table);
+                            for (int i = 0; i < 9; i++) {
+                                displayTable(table, commandTwo, commandOne);
+                                valid = true;
+                            }
+                        } else if (commandOne.equals(aiCorrect) && commandTwo.equals(aiCorrect)) {
+                            rawTable(table);
+                            for (int i = 0; i < 9; i++) {
+                                displayTable(table, commandTwo, commandOne);
+                                valid = true;
+                            }
+                        } else if (commandOne.equals(userCorrect) && commandTwo.equals(userCorrect)) {
+                            rawTable(table);
+                            for (int i = 0; i < 9; i++) {
+                                displayTable(table, commandTwo, commandOne);
+                                valid = true;
+                            }
+                        }
+                    } else if (arrayInput[0].equals("exit")) {
+                        System.exit(0);
+                    }
                 }
-            } else if (commandOne.equals(aiCorrect) && commandTwo.equals(aiCorrect)) {
-                rawTable(table);
-                for (int i = 0; i < 9; i++) {
-                    displayTable(table, commandTwo, commandOne);
-                    valid = true;
-                }
-            } else if (commandOne.equals(userCorrect) && commandTwo.equals(userCorrect)) {
-                rawTable(table);
-                for (int i = 0; i < 9; i++) {
-                    displayTable(table, commandTwo, commandOne);
-                    valid = true;
-                }
-            }   else if (stringStart.equals("exit")) {
-                System.exit(0);
-            } else {
-                System.out.println("Bad parameters!");
-            }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Bad parameters!");
+        }
         }
     }
 }
