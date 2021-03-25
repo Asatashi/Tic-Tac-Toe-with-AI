@@ -58,107 +58,91 @@ public class Main {
         }
     }
 
-
-    public static void displayTable(String[][] table, String commandTwo, String commandOne) {       //it displays the game board with user input
-        Scanner scanner = new Scanner(System.in);
-        int firstInput;
-        int secondInput;
-        int count = 9;
-        for (String[] strings : table) {
-            for (String string : strings) {
-                if (!string.equals("  ")) {
-                    count--;
-                }
+    public static void aiEasyXs(String[][] table, String xs) {
+        boolean valid = false;
+        System.out.println("Making move level \"easy\"");
+        while (!valid) {
+            int randomNumOne = (int) (Math.random() * 3 + 1);
+            int randomNumTwo = (int) (Math.random() * 3 + 1);
+            if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
+                table[randomNumOne - 1][randomNumTwo - 1] = xs;
+                rawTable(table);
+                valid = true;
             }
         }
-        String os = "O ";
-        String xs = "X ";
-        if ((count == 1 || count == 3 || count == 5 || count == 7 || count == 9)) {
-            boolean valid = false;
-            if (commandOne.equals("easy")) {
-                System.out.println("Making move level \"easy\"");
-                while (!valid) {
-                    int randomNumOne = (int) (Math.random() * 3 + 1);
-                    int randomNumTwo = (int) (Math.random() * 3 + 1);
-                    if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
-                        table[randomNumOne - 1][randomNumTwo - 1] = xs;
-                        rawTable(table);
-                        valid = true;
-                    }
-                }
-            } else {
-                while (!valid) {
-                    System.out.print("Enter the coordinates: > ");
-                    try {
-                        firstInput = scanner.nextInt();
-                        secondInput = scanner.nextInt();
-                        if (table[firstInput - 1][secondInput - 1].equals("  ")) {
-                            table[firstInput - 1][secondInput - 1] = xs;
-                            rawTable(table);
-                            valid = true;
-                        } else {
-                            System.out.println("This cell is occupied! Choose another one!");
-                        }
-                    } catch (InputMismatchException e) {
-                        System.out.println("You should enter numbers!");
-                        return;
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("Coordinates should be from 1 to 3!");
-                    }
-                }
-            }
-        } else if (commandTwo.equals("easy")) {
-            System.out.println("Making move level \"easy\"");
-            boolean valid = false;
-            while (!valid) {
-                int randomNumOne = (int) (Math.random() * 3 + 1);
-                int randomNumTwo = (int) (Math.random() * 3 + 1);
-                if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
-                    table[randomNumOne - 1][randomNumTwo - 1] = os;
-                    rawTable(table);
-                    valid = true;
-                }
-            }
-        } else {
-            boolean valid = false;
-            while (!valid) {
-                System.out.print("Enter the coordinates: > ");
-                try {
-                    firstInput = scanner.nextInt();
-                    secondInput = scanner.nextInt();
-                    if (table[firstInput - 1][secondInput - 1].equals("  ")) {
-                        table[firstInput - 1][secondInput - 1] = os;
-                        rawTable(table);
-                        valid = true;
-                    } else {
-                        System.out.println("This cell is occupied! Choose another one!");
-                    }
-                } catch (InputMismatchException e) {
-                    System.out.println("You should enter numbers!");
-                    return;
-                } catch (IndexOutOfBoundsException e) {
-                    System.out.println("Coordinates should be from 1 to 3!");
-                }
-            }
-        }
-        gameRules(table, os, xs, count);
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String[][] table = new String[3][3];
-        String s = "  ";
-        for (String[] strings : table) {
-            Arrays.fill(strings, s);
+    public static void aiEasyOs(String[][] table, String os) {
+        boolean valid = false;
+        System.out.println("Making move level \"easy\"");
+        while (!valid) {
+            int randomNumOne = (int) (Math.random() * 3 + 1);
+            int randomNumTwo = (int) (Math.random() * 3 + 1);
+            if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
+                table[randomNumOne - 1][randomNumTwo - 1] = os;
+                rawTable(table);
+                valid = true;
+            }
         }
+    }
+
+    public static void playerXs(String[][] table, String xs) {
+        Scanner scanner = new Scanner(System.in);
+        boolean valid = false;
+        while (!valid) {
+            System.out.print("Enter the coordinates: > ");
+            try {
+                int firstInput = scanner.nextInt();
+                int secondInput = scanner.nextInt();
+                if (table[firstInput - 1][secondInput - 1].equals("  ")) {
+                    table[firstInput - 1][secondInput - 1] = xs;
+                    rawTable(table);
+                    valid = true;
+                } else {
+                    System.out.println("This cell is occupied! Choose another one!");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("You should enter numbers!");
+                return;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Coordinates should be from 1 to 3!");
+            }
+        }
+    }
+
+    public static void playerOs(String[][] table, String os) {
+        Scanner scanner = new Scanner(System.in);
+        boolean valid = false;
+        while (!valid) {
+            System.out.print("Enter the coordinates: > ");
+            try {
+                int firstInput = scanner.nextInt();
+                int secondInput = scanner.nextInt();
+                if (table[firstInput - 1][secondInput - 1].equals("  ")) {
+                    table[firstInput - 1][secondInput - 1] = os;
+                    rawTable(table);
+                    valid = true;
+                } else {
+                    System.out.println("This cell is occupied! Choose another one!");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("You should enter numbers!");
+                return;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Coordinates should be from 1 to 3!");
+            }
+        }
+    }
+
+    public static void correctStartInput(String[][] table) {
+        Scanner scanner = new Scanner(System.in);
         String commandOne;
         String commandTwo;
         String userCorrect = "user";
         String aiCorrect = "easy";
         boolean valid = false;
         while (!valid) {
-        try {
-//            System.out.println("Please enter: start and user or easy two times(user is you playing an easy is bot)");
+            try {
                 System.out.print("Input command: > ");
                 String[] arrayInput = scanner.nextLine().split(" ");
                 for (int j = 0; j < 3; j++) {
@@ -189,8 +173,43 @@ public class Main {
                     }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Bad parameters!");
+                System.out.println("Bad parameters!");
+            }
         }
+
+    }
+
+    public static void displayTable(String[][] table, String commandTwo, String commandOne) {       //it displays the game board with user input
+        int count = 9;
+        for (String[] strings : table) {
+            for (String string : strings) {
+                if (!string.equals("  ")) {
+                    count--;
+                }
+            }
         }
+        String os = "O ";
+        String xs = "X ";
+        if ((count == 1 || count == 3 || count == 5 || count == 7 || count == 9)) {
+            if (commandOne.equals("easy")) {
+                aiEasyXs(table,xs);
+            } else {
+                playerXs(table,xs);
+            }
+        } else if (commandTwo.equals("easy")) {
+            aiEasyOs(table,os);
+        } else {
+            playerOs(table,os);
+        }
+        gameRules(table, os, xs, count);
+    }
+
+    public static void main(String[] args) {
+        String[][] table = new String[3][3];
+        String s = "  ";
+        for (String[] strings : table) {
+            Arrays.fill(strings, s);
+        }
+        correctStartInput(table);
     }
 }
