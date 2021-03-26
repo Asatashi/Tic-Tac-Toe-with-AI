@@ -138,8 +138,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String commandOne;
         String commandTwo;
-        String userCorrect = "user";
-        String aiCorrect = "easy";
         boolean valid = false;
         String s = "  ";
         for (String[] strings : table) {
@@ -154,25 +152,11 @@ public class Main {
                     if (arrayInput[j].equals("start") || arrayInput[j].equals("easy") || arrayInput[j].equals("user")) {
                         commandOne = arrayInput[1];
                         commandTwo = arrayInput[2];
-                        if (commandOne.equals(userCorrect) && commandTwo.equals(aiCorrect) || commandOne.equals(aiCorrect) && commandTwo.equals(userCorrect)) {
                             rawTable(table);
                             for (int i = 0; i < 9; i++) {
                                 displayTable(table, commandTwo, commandOne,count);
                                 valid = true;
                             }
-                        } else if (commandOne.equals(aiCorrect) && commandTwo.equals(aiCorrect)) {
-                            rawTable(table);
-                            for (int i = 0; i < 9; i++) {
-                                displayTable(table, commandTwo, commandOne,count);
-                                valid = true;
-                            }
-                        } else if (commandOne.equals(userCorrect) && commandTwo.equals(userCorrect)) {
-                            rawTable(table);
-                            for (int i = 0; i < 9; i++) {
-                                displayTable(table, commandTwo, commandOne,count);
-                                valid = true;
-                            }
-                        }
                     } else if (arrayInput[0].equals("exit")) {
                         System.exit(0);
                     }
