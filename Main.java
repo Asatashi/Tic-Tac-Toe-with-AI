@@ -38,7 +38,6 @@ public class Main {
                 || table[0][0].equals(xs) && table[1][1].equals(xs) && table[2][2].equals(xs)
                 || table[2][0].equals(xs) && table[1][1].equals(xs) && table[0][2].equals(xs)) {
             System.out.println("O wins");
-            rawTable(table);
             correctStartInput(table);
         } else if (table[0][0].equals(os) && table[0][1].equals(os) && table[0][2].equals(os)
                 || table[1][0].equals(os) && table[1][1].equals(os) && table[1][2].equals(os)
@@ -49,11 +48,9 @@ public class Main {
                 || table[0][0].equals(os) && table[1][1].equals(os) && table[2][2].equals(os)
                 || table[2][0].equals(os) && table[1][1].equals(os) && table[0][2].equals(os)) {
             System.out.println("X wins");
-            rawTable(table);
             correctStartInput(table);
         } else if (count == 1) {
             System.out.println("Draw");
-            rawTable(table);
             correctStartInput(table);
         }
     }
