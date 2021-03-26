@@ -55,6 +55,7 @@ public class Main {
         }
     }
 
+
     protected static void aiEasyXs(String[][] table, String xs) {
         boolean valid = false;
         System.out.println("Making move level \"easy\"");
@@ -82,6 +83,89 @@ public class Main {
             }
         }
     }
+
+    protected static void aiMediumOs(String[][] table, String os) {
+        boolean valid = false;
+        System.out.println("Making move level \"medium\"");
+        while (!valid) {
+            int xsCounter = 0;
+            int osCounter = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    String xs = "X";
+                    if (table[i][j].equals(os)) {
+                        osCounter++;
+                        if (osCounter == 2) {
+                            if (table[i][j].equals("  ")) {
+                                table[i][j] = os;
+                                rawTable(table);
+                                valid = true;
+                            }
+                        }
+                    } else if (table[i][j].equals(xs)) {
+                        xsCounter++;
+                        if (xsCounter == 2) {
+                            if (table[i][j].equals("  ")) {
+                                table[i][j] = os;
+                                rawTable(table);
+                                valid = true;
+                            }
+                        }
+                    }   else {
+                        int randomNumOne = (int) (Math.random() * 3 + 1);
+                        int randomNumTwo = (int) (Math.random() * 3 + 1);
+                        if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
+                            table[randomNumOne - 1][randomNumTwo - 1] = os;
+                            rawTable(table);
+                            valid = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected static void aiMediumXs(String[][] table, String xs) {
+        boolean valid = false;
+        System.out.println("Making move level \"medium\"");
+        while (!valid) {            //TODO try to make xs and os counter inside the display Table method and do if statement not to loop inside medium ai level
+            int xsCounter = 0;
+            int osCounter = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    String os = "O";
+                    if (table[i][j].equals(xs)) {
+                        xsCounter++;
+                        if (xsCounter == 2) {
+                            if (table[i][j].equals("  ")) {
+                                table[i][j] = xs;
+                                rawTable(table);
+                                valid = true;
+                            }
+                        }
+                    } else if (table[i][j].equals(os)) {
+                        osCounter++;
+                        if (osCounter == 2) {
+                            if (table[i][j].equals("  ")) {
+                                table[i][j] = xs;
+                                rawTable(table);
+                                valid = true;
+                            }
+                        }
+                    }   else {
+                        int randomNumOne = (int) (Math.random() * 3 + 1);
+                        int randomNumTwo = (int) (Math.random() * 3 + 1);
+                        if (table[randomNumOne - 1][randomNumTwo - 1].equals("  ")) {
+                            table[randomNumOne - 1][randomNumTwo - 1] = xs;
+                            rawTable(table);
+                            valid = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     protected static void playerXs(String[][] table, String xs) {
         Scanner scanner = new Scanner(System.in);
@@ -146,7 +230,11 @@ public class Main {
                 System.out.print("Input command: > ");
                 String[] arrayInput = scanner.nextLine().split(" ");
                 for (int j = 0; j < 3; j++) {
-                    if (arrayInput[j].equals("start") || arrayInput[j].equals("easy") || arrayInput[j].equals("user")) {
+                    if (arrayInput[j].equals("start")
+                            || arrayInput[j].equals("easy")
+                            || arrayInput[j].equals("user")
+                            || arrayInput[j].equals("medium")
+                            || arrayInput[j].equals("hard")) {
                         commandOne = arrayInput[1];
                         commandTwo = arrayInput[2];
                             rawTable(table);
@@ -177,12 +265,16 @@ public class Main {
         if ((count == 1 || count == 3 || count == 5 || count == 7 || count == 9)) {
             if (commandOne.equals("easy")) {
                 aiEasyXs(table,xs);
+            } else if (commandOne.equals("medium")) {
+                aiMediumXs(table,xs);
             } else {
                 playerXs(table,xs);
             }
         } else if (commandTwo.equals("easy")) {
             aiEasyOs(table,os);
-        } else {
+        } else if (commandTwo.equals("medium")) {
+            aiMediumOs(table,os);
+        }else {
             playerOs(table,os);
         }
         gameRules(table, os, xs, count);
